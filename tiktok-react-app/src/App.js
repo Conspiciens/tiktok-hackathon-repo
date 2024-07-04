@@ -17,7 +17,7 @@ function App() {
   };
 
   return (
-    <div className="relative h-screen">
+    <div className="relative h-screen w-full">
       <img
         src="./tiktok-logo.png"
         width={220}
@@ -37,12 +37,12 @@ function App() {
       ></img>
       <Fab
         aria-label="chatbot"
-        sx={{ width: "100px", height: "100px", position: "fixed" }}
+        sx={{ width: {sm: 100, md: 150}, height: {sm: 100, md: 150}, position: "fixed" }}
         onClick={handleBotClick}
         className="right-10 bottom-10"
       >
         <img
-          className="rounded-full"
+          className="rounded-full md:w-28"
           src="./bot-icon.jpg"
           width={80}
           height={80}

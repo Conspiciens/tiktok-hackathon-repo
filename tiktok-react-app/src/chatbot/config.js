@@ -19,6 +19,9 @@ export const config = {
     customStyles: {
         botMessageBox: {
             backgroundColor: "#72BEC5",
+        },
+        chatButton: {
+            backgroundColor: "#ED1E50"
         }
     }
 }
