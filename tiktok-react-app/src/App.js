@@ -6,6 +6,7 @@ import { Dialog } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SendIcon from '@mui/icons-material/Send';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
+import ChatbotDescription from "./ChatbotDescription";
 
 function App() {
   const [openChatbot, setOpenChatbot] = useState(false);
@@ -44,6 +45,7 @@ function App() {
         className="m-auto mt-[4vh]"
         alt="TikTok's new chatbot introduction"
       ></img>
+      <ChatbotDescription></ChatbotDescription>
       <Fab
         aria-label="chatbot"
         sx={{ width: {sm: 100, md: 150}, height: {sm: 100, md: 150}, position: "fixed" }}
