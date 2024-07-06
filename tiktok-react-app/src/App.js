@@ -1,12 +1,12 @@
 import "./App.css";
 import Fab from "@mui/material/Fab";
 import { useState } from "react";
-import TikTokChatbot from "./TikTokChatbot";
+import TikTokChatbot from "./components/TikTokChatbot";
 import { Dialog } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SendIcon from '@mui/icons-material/Send';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
-import ChatbotDescription from "./ChatbotDescription";
+import ChatbotDescription from "./components/ChatbotDescription";
 
 function App() {
   const [openChatbot, setOpenChatbot] = useState(false);
@@ -61,7 +61,7 @@ function App() {
         ></img>
       </Fab>
       {openChatbot && (
-        <Dialog onClose={handleClose} open={openChatbot}>
+        <Dialog onClose={handleClose} open={openChatbot} maxWidth="xl">
           <TikTokChatbot></TikTokChatbot>
         </Dialog>
       )}
