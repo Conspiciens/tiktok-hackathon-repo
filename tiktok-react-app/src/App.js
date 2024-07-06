@@ -3,6 +3,9 @@ import Fab from "@mui/material/Fab";
 import { useState } from "react";
 import TikTokChatbot from "./TikTokChatbot";
 import { Dialog } from "@mui/material";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import SendIcon from '@mui/icons-material/Send';
+import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 
 function App() {
   const [openChatbot, setOpenChatbot] = useState(false);
@@ -17,7 +20,7 @@ function App() {
   };
 
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative h-screen">
       <img
         src="./tiktok-logo.png"
         width={220}
@@ -26,9 +29,15 @@ function App() {
       ></img>
       <input
         type="search"
-        className="rounded-full h-16 hover:border-gray-400 border-2 bg-slate-100 w-[35vw] text-2xl p-3 pl-5 text-black md:inline-block hidden align-middle ml-[18vw]"
+        className="rounded-full h-16 hover:border-gray-400 border-2 bg-slate-100 w-[35vw] text-2xl p-3 pl-5 text-black lg:inline-block hidden align-middle xl:ml-[15vw] ml-[2vw]"
         placeholder="Search"
       ></input>
+      <div className="inline-block m-11 float-right space-x-5">
+        <FavoriteBorderIcon className="cursor-pointer" sx={{fontSize: "3rem"}} onClick={(_) => console.log("Wishlist clicked")}></FavoriteBorderIcon>
+        <SendIcon sx={{fontSize: "3rem"}}></SendIcon>
+        <ModeCommentOutlinedIcon sx={{fontSize: "3rem"}}></ModeCommentOutlinedIcon>
+        <img className="rounded-full inline-block border-black border-2" src="./user-profile-pic.jpg" width={60} alt="User's profile pic"></img>
+      </div>
       <img
         src="./tiktok-bg.png"
         width="100%"
