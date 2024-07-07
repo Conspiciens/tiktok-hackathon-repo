@@ -5,6 +5,9 @@
 > [!NOTE]
 > **TODO**: Add chatbot description here!
 
+### Set Up:
+Run this command: pip install -r requirements.txt to get all the python libraries
+
 
 ### Built With 
 * [React](https://react.dev/)
