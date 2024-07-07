@@ -36,7 +36,7 @@ def chat_with_memory():
     response = client.chat.completions.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "You are ChatGPT with memory capabilities. You are to determine the best link for the given user based on the context given."},
+            {"role": "system", "content": "You are ChatGPT with memory capabilities. You are to determine the single best link for the given user based on the context given, conversation history and the links given. Do not create other new links, just use the one's given."},
             {"role": "user", "content": context},
         ], 
     )
@@ -49,14 +49,18 @@ def chat_with_memory():
     return response.choices[0].message.content 
 
 def store_user_data(json_data): 
+    user_data = ""
     file_path = "user.json"
     with open(file_path, 'r') as file: 
         user_data = json.load(file) 
     
+    if len(json_data["conversation_history"]) > 5: 
+        json_data["conversation_history"].pop()
+    
     user_data.update(json_data)
 
     with open(file_path, 'w') as file: 
-        json.dump(user_data, file)
+        json.dump(user_data, file, indent=2)
     
 
 def get_user_data(): 
