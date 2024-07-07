@@ -9,7 +9,7 @@ params = {
     "api_key": os.getenv("my_api_key")
 }
 
-images = ["https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/1130px-Red_Apple.jpg"]
+images = ["https://drive.google.com/file/d/1omEjL2979qkaFUq2AGS78fC0cj6gYAc_/view?usp=sharing"]
 top_results = []
 other_results = []
 
@@ -17,9 +17,10 @@ top_retailers = ["amazon", "ebay", "walmart", "target", "zappos", "newegg"]
 
 for image in images: 
     params["image_url"] = images[0]
-    search = GoogleSearch(params) 
+    search = GoogleSearch(params)
+    print(search)
     results = search.get_dict()["image_results"]
-    # print(results)
+    print(results)
     for result in results: 
         link = result["link"]
         #can help with prompting
