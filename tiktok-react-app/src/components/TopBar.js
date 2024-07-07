@@ -17,10 +17,10 @@ function TopBar() {
 
       <input
         type="search"
-        className="rounded-full h-16 hover:border-gray-400 border-2 bg-slate-100 w-[35vw] text-2xl p-3 pl-5 text-black lg:inline-block hidden align-middle xl:ml-[15vw] ml-[2vw]"
+        className="rounded-full h-16 hover:border-gray-400 border-2 bg-slate-100 w-[35vw] text-2xl p-3 pl-5 text-black lg:inline-block hidden align-middle xl:ml-[15vw] ml-[4vw]"
         placeholder="Search"
       ></input>
-      <div className="inline-block m-11 float-right space-x-5">
+      <div className="inline-block my-11 mx-[3vw] float-right space-x-5">
         <Link to="/wishlist">
           <FavoriteBorderIcon
             className="cursor-pointer"
