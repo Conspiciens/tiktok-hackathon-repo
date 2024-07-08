@@ -1,0 +1,38 @@
+.react-chatbot-kit-chat-container {
+    position: relative;
+    width: 50vw;
+}
+
+.react-chatbot-kit-chat-header {
+    font-size: 1.5rem;
+}
+
+.react-chatbot-kit-chat-input {
+    font-size: 1.5rem;
+}
+
+.react-chatbot-kit-chat-inner-container {
+    height: 70vh;
+}
+
+.react-chatbot-kit-chat-message-container {
+    height: 60vh;
+}
+
+.react-chatbot-kit-chat-bot-message {
+    margin-left: 1rem;
+    font-size: 1.2rem;
+    width: 35%;
+}
+
+.react-chatbot-kit-user-chat-message {
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+
+.react-chatbot-kit-chat-btn-send {
+    width: 60px;
+    border-radius: 100%;
+    margin: 3px;
+}
