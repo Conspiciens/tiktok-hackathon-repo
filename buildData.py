@@ -12,7 +12,7 @@ import json
 #Image -> URL Constants:
 TOP_REALITORS = ["amazon", "ebay", "walmart", "target", "zappos", "newegg"]
 params = {
-    "engine": "google_reverse_image", 
+    "engine": "google_lens", 
     "api_key": ""
 }
 
@@ -54,6 +54,7 @@ def getImages(path = 'collages/', collage = 'collage'):
         x1, x2 = max(x - buffer, 0), min(x + w + buffer, image.shape[1])
         
         extracted_image = image[y1:y2, x1:x2]
+        extracted_image = cv2.resize(extracted_image, (400, 400))
         min_width, min_height = 30+buffer, 30+buffer
         
         if w >= min_width and h >= min_height:
@@ -99,7 +100,7 @@ def getURLS(images, uuids, contexts): #Images is the public urls
         params["image_url"] = images[0]
         search = GoogleSearch(params) 
         #print(search.get_dict())
-        results = search.get_dict()["image_results"]
+        results = search.get_dict()["visual_matches"]
 
         for result in results: 
             link = result["link"]
