@@ -69,6 +69,9 @@ If you are using a Windows OS and you run into the following error after running
 ```
 This is a problem with casing, which is only specific to Windows. You can resolve this by locating the directory names with the correct casing and running the React application again from there.
 
+If you are trying to run the SerpAPI Google Reverse Image Search, you must only run pip install google-search-results, not pip install serpapi as this will throw an error that SerpAPI does not exist. If you have already pip installed SerpAPI, make sure to uninstall it before running.
+
 ## Resources 
 * [Node.js and NPM Installation](https://nodejs.org/en/download/package-manager)
 * [React-chatbot-kit Docs](https://fredrikoseberg.github.io/react-chatbot-kit-docs/docs/)
+* [SerpAPI Google Search Issues](https://github.com/serpapi/google-search-results-python/issues/63)
