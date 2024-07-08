@@ -1,11 +1,32 @@
 import React from "react";
 import { wishlist } from "../Wishlist";
+import OpenAI from "openai";
+
+const OPENAI_KEY = ""
+const openai = new OpenAI({ apiKey: OPENAI_KEY, dangerouslyAllowBrowser: true });
+
+async function ChatGPTmain(prompt) {
+    try {
+      const completion = await openai.chat.completions.create({
+        messages: [{ role: "system", content: prompt }],
+        model: "gpt-3.5-turbo",
+      });
+  
+      const response = completion.choices[0].message.content;
+      return response;
+
+    } catch (error) {
+      console.error("Error in ChatGPTmain:", error);
+      return null; // or handle the error as needed
+    }
+  }
+
 
 const ActionProvider = ({ createChatBotMessage, setState, children}) => {
-
-    function handleMessage(userMessage) {
+    async function handleMessage(userMessage) {
         // This function should generate a response from ChatGPT
-        const botResponse = createChatBotMessage("Here are the links I found for you: ", {
+        const GPTresponse = await ChatGPTmain(userMessage);
+        const botResponse = createChatBotMessage(GPTresponse, {
             widget: "productLink"
         })
 
