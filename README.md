@@ -1,13 +1,12 @@
 # Tiktok TechJam Hackathon Repo
 
+## Problem Statement
+TikTok is the new go-to place for getting information and fulfilling search inquiries. This can come as a surprise, but it is also commonly used for gift finding! You can easily search for gift ideas on TikTok and get a ton of recommendations and product reviews from other creators. This is so much more convenient than searching on Google because there are actual people vouching for these products/items!
+
+While this is great, these recommendations/reviews present themselves as a collage or a video, adding an extra step for users to find the actual product on their own. You can just imagine having to switch between Google and the TikTok App to make sure you have the spelling correct and how frustrating that can be. This leads most people to give up in the middle of their search.
+
 ## About TikTok On The Clock
-
-> [!NOTE]
-> **TODO**: Add chatbot description here!
-
-## Features
-> [!NOTE]
-> **TODO**: Add existing features here!
+TikTok On The Clock is a chatbot that is integrated with TikTok's current Search page. The chatbot is designed to aid users with their search experience and alleviate the workload they need to do. With the help of the chatbot, users can get access to reviewed/vouched for product links with just one inquiry. TikTok On The Clock will also add all the links it provides to a wishlist that users can reference at a later time!
 
 ### Built With 
 * [React](https://react.dev/)
@@ -58,8 +57,9 @@
   ```
 
 ## Future Implementation
-> [!NOTE]
-> **TODO**: Add future implementation here!
+* Adapt the chatbot’s personality/way of speaking to the user’s watch history
+* Include TikTok videos in the analysis process and provide links to videos that are most helpful considering the user's inquiry.
+* Expand beyond gift ideas! We can embed product links directly to any video mentioning items/products
 
 ## Help
 If you are using a Windows OS and you run into the following error after running `npm start`:
