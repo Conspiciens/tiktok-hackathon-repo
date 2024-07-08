@@ -97,7 +97,7 @@ def getURLS(images, uuids, contexts): #Images is the public urls
 
     #Call API and search of images
     for image in images: 
-        params["image_url"] = images[0]
+        params["url"] = images[0]
         search = GoogleSearch(params) 
         #print(search.get_dict())
         results = search.get_dict()["visual_matches"]
@@ -113,15 +113,13 @@ def getURLS(images, uuids, contexts): #Images is the public urls
                     break
             if (not isTopReal):       
                 other_results.append(link)
-        toReturn[image] = {"top_results": top_results, "other_results": other_results}
-
 
         #Create object to store the data:
         obj = {
             "uuid": uuids[counter],
             "image_link": image,
-            "top_results": top_results,
-            "other_results": other_results,
+            "top_results": top_results[:10],
+            "other_results": other_results[:10],
             "context": contexts
         }
 
