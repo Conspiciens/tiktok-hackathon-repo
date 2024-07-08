@@ -5,12 +5,17 @@
 > [!NOTE]
 > **TODO**: Add chatbot description here!
 
+## Features
+> [!NOTE]
+> **TODO**: Add existing features here!
 
 ### Built With 
 * [React](https://react.dev/)
 * [Tailwind CSS](https://tailwindcss.com/)
-* [OpenAI API](https://platform.openai.com/docs/api-reference/introduction)
 * [React-chatbot-kit](https://github.com/FredrikOseberg/react-chatbot-kit)
+* [OpenAI API](https://platform.openai.com/docs/api-reference/introduction)
+* [Google Reverse Image API](https://serpapi.com/google-reverse-image)
+* [OpenCV: Canny Edge Detection](https://docs.opencv.org/4.x/d7/de1/tutorial_js_canny.html)
 
 ## Getting Started
 
@@ -51,7 +56,18 @@
   # For React router dom module
   npm install react-router-dom --save
   ```
-  
+
+## Future Implementation
+> [!NOTE]
+> **TODO**: Add future implementation here!
+
+## Help
+If you are using a Windows OS and you run into the following error after running `npm start`:
+```
+ Plugin "react" was conflicted between "package.json >> eslint-config-react-app
+ >> [some_path]" and "BaseConfig >> [some_other_path]".
+```
+This is a problem with casing, which is only specific to Windows. You can resolve this by locating the directory names with the correct casing and running the React application again from there.
 
 ## Resources 
 * [Node.js and NPM Installation](https://nodejs.org/en/download/package-manager)
