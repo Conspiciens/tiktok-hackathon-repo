@@ -2,25 +2,65 @@ import React from "react";
 import { wishlist } from "../Wishlist";
 import OpenAI from "openai";
 
-const OPENAI_KEY = ""
+const OPENAI_KEY = "";
 const openai = new OpenAI({ apiKey: OPENAI_KEY, dangerouslyAllowBrowser: true });
 
-async function ChatGPTmain(prompt) {
-    try {
-      const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: prompt }],
-        model: "gpt-3.5-turbo",
-      });
-  
-      const response = completion.choices[0].message.content;
-      return response;
+function stringToBoolean(str) {
+    // Convert string to uppercase to handle case insensitivity
+    return str.toUpperCase() === 'TRUE';
+  }
 
-    } catch (error) {
-      console.error("Error in ChatGPTmain:", error);
-      return null; // or handle the error as needed
+async function ChatGPTmain(prompt) {
+    const askingForRecc = "ONLY ANSWER THIS QUESTION WITH THE WORD TRUE OR THE WORD FALSE. Is this person asking for product recommendations, gift ideas, or ideas for what to buy?: " + prompt
+    try {
+        const completion = await openai.chat.completions.create({
+          messages: [{ role: "system", content: askingForRecc }],
+          model: "gpt-3.5-turbo",
+        });
+    
+        const askingForReccResponse = completion.choices[0].message.content;
+        console.log(askingForRecc);
+        console.log(askingForReccResponse);
+        
+  
+      } catch (error) {
+        console.error("Error in ChatGPTmain:", error);
+        return null;
+    }
+
+
+    if(stringToBoolean(askingForRecc)){
+        console.log("TRUE!");
+        return giveRecc(prompt);
+    }
+    else{
+        return askingQuestion(prompt);
     }
   }
 
+async function giveRecc(prompt){
+    //Tell GPT to look at its memory
+
+    //Tell GPT to add the items to the list
+
+    return "Let me think about it some more"
+}
+
+async function askingQuestion(prompt){
+    try {
+        const completion = await openai.chat.completions.create({
+          messages: [{ role: "system", content: "Keep your response short. " + prompt }],
+          model: "gpt-3.5-turbo",
+        });
+    
+        const response = completion.choices[0].message.content;
+        return response;
+  
+      } catch (error) {
+        console.error("Error in ChatGPTmain:", error);
+        return null; // or handle the error as needed
+      }
+}
 
 const ActionProvider = ({ createChatBotMessage, setState, children}) => {
     async function handleMessage(userMessage) {
