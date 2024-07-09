@@ -1,5 +1,6 @@
 from serpapi import GoogleSearch
-from dotenv import load_dotenv, dotenv_values
+#commented out since pip dependency doesn't work
+# from dotenv import load_dotenv, dotenv_values
 import os
 import cv2
 import numpy as np
@@ -13,19 +14,21 @@ import json
 TOP_REALITORS = ["amazon", "ebay", "walmart", "target", "zappos", "newegg"]
 params = {
     "engine": "google_lens", 
-    "api_key": ""
+    #remember to delete
+    "api_key": "7b083c0493628e4959a44977acf9039a4daed2d59324da373e6bca9d1614af07"
 }
 
 session = boto3.Session(
-    aws_access_key_id='',
-    aws_secret_access_key='',
+    #remember to delete
+    aws_access_key_id='AKIA2MAMGG24V4QW3X6F',
+    aws_secret_access_key='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',
     region_name='us-west-1'
 )
 
 s3 = session.client('s3')
 bucket = 'image-bucket-for-tiktok'
 
-load_dotenv()
+# load_dotenv()
 
 #Collage -> Images:
 def getImages(path = 'collages/', collage = 'collage'):
@@ -127,7 +130,7 @@ def getURLS(images, uuids, context): #Images is the public urls
 
 def main():
     collages = ['collage']#, 'collage2','collage3', 'collage4','collage5', 'collage6']
-    contexts = ['These are great gifts for the moms, sisters, and girlfriends in your life! Great for peopel who love self-care, looking amazing, and resting!',
+    contexts = ['These are great gifts for the moms, sisters, and girlfriends in your life! Great for people who love self-care, looking amazing, and resting!',
                 'These are great gifts for the friends in your life who love to take care of their hair!',
                 'BEST IDEAS OF THE GUYS! Buy these gifts for your brothers, dads, and boyfriends!'
                 'Cool ideas for things to buy for your boyfriend!',
@@ -139,11 +142,11 @@ def main():
     for c in collages:
         images, uuids = getImages(path = 'collages/', collage = c)
         upload_images(images, uuids)
-        imageURLS = get_images(images, uuids)
+        imageURLS = get_images(uuids)
         #print(imageURLS)
         data = getURLS(imageURLS, uuids, contexts[counter])
 
-        file_path = "data.json"
+        file_path = "tiktok-react-app/src/data.json"
         with open(file_path, 'w') as f:
             json.dump(data, f, indent=2)
 
