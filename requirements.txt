@@ -1,0 +1,9 @@
+# Integration with SERPAPI
+google-search-results
+
+# Environment Configuration
+python-dotenv
+
+# Image Processing with OpenCV
+opencv-python
+numpy
