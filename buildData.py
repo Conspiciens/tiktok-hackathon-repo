@@ -87,19 +87,17 @@ def get_images(uuids, bucket=bucket):
 
 #Image -> URL:
 
-def getURLS(images, uuids, contexts): #Images is the public urls
+def getURLS(images, uuids, context): #Images is the public urls
     top_results = []
     other_results = []
-    toReturn = {}
     data = []
     counter = 0
-    contexts = ["blah"]
 
     #Call API and search of images
     for image in images: 
         params["url"] = images[0]
         search = GoogleSearch(params) 
-        #print(search.get_dict())
+        print(search.get_dict())
         results = search.get_dict()["visual_matches"]
 
         for result in results: 
@@ -120,7 +118,7 @@ def getURLS(images, uuids, contexts): #Images is the public urls
             "image_link": image,
             "top_results": top_results[:10],
             "other_results": other_results[:10],
-            "context": contexts
+            "context": context
         }
 
         data.append(obj)
@@ -128,19 +126,28 @@ def getURLS(images, uuids, contexts): #Images is the public urls
     return data
 
 def main():
-    collages = ['collage']# , 'collage2']
+    collages = ['collage']#, 'collage2','collage3', 'collage4','collage5', 'collage6']
+    contexts = ['These are great gifts for the moms, sisters, and girlfriends in your life! Great for peopel who love self-care, looking amazing, and resting!',
+                'These are great gifts for the friends in your life who love to take care of their hair!',
+                'BEST IDEAS OF THE GUYS! Buy these gifts for your brothers, dads, and boyfriends!'
+                'Cool ideas for things to buy for your boyfriend!',
+                'GIFT IDEAS FOR YOUR MOTHERS AND MOMS! Get these gifts for your moms for mothers day!',
+                'Fathers day is coming up! Get these gifts for the dads in your life!'
+                ]
 
+    counter = 0
     for c in collages:
         images, uuids = getImages(path = 'collages/', collage = c)
         upload_images(images, uuids)
-        imageURLS = get_images(uuids)
+        imageURLS = get_images(images, uuids)
         #print(imageURLS)
-        data = getURLS(imageURLS, uuids, [])
+        data = getURLS(imageURLS, uuids, contexts[counter])
 
         file_path = "data.json"
         with open(file_path, 'w') as f:
             json.dump(data, f, indent=2)
 
-        print(f"JSON data saved to {file_path}")
+        print(f"JSON data saved to {file_path}")#Fix me, src
+        counter+=1
 
 main()
