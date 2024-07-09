@@ -14,14 +14,12 @@ import json
 TOP_REALITORS = ["amazon", "ebay", "walmart", "target", "zappos", "newegg"]
 params = {
     "engine": "google_lens", 
-    #remember to delete
-    "api_key": "7b083c0493628e4959a44977acf9039a4daed2d59324da373e6bca9d1614af07"
+    "api_key": ""
 }
 
 session = boto3.Session(
-    #remember to delete
-    aws_access_key_id='AKIA2MAMGG24V4QW3X6F',
-    aws_secret_access_key='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',
+    aws_access_key_id='',
+    aws_secret_access_key='',
     region_name='us-west-1'
 )
 
