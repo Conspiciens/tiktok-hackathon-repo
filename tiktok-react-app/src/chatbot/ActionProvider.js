@@ -1,41 +1,153 @@
 import React from "react";
 import { wishlist } from "../Wishlist";
 import OpenAI from "openai";
+import data_file from "../data.json"
 
-const OPENAI_KEY = ""
+const OPENAI_KEY = "";
 const openai = new OpenAI({ apiKey: OPENAI_KEY, dangerouslyAllowBrowser: true });
 
-async function ChatGPTmain(prompt) {
-    try {
-      const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: prompt }],
-        model: "gpt-3.5-turbo",
-      });
-  
-      const response = completion.choices[0].message.content;
-      return response;
+function stringToBoolean(str) {
+    // Convert string to uppercase to handle case insensitivity
+    return str.toUpperCase() === 'TRUE';
+  }
 
-    } catch (error) {
-      console.error("Error in ChatGPTmain:", error);
-      return null; // or handle the error as needed
+async function ChatGPTmain(prompt) {
+    let askingForReccResponse
+    const askingForRecc = "ONLY ANSWER THIS QUESTION WITH THE WORD TRUE OR THE WORD FALSE. Is this person asking for product recommendations, gift ideas, or ideas for what to buy?: " + prompt
+    try {
+        const completion = await openai.chat.completions.create({
+          messages: [{ role: "system", content: askingForRecc }],
+          model: "gpt-4",
+        });
+    
+        askingForReccResponse = completion.choices[0].message.content;
+        console.log(askingForRecc);
+        console.log(askingForReccResponse);
+        
+  
+      } catch (error) {
+        console.error("Error in ChatGPTmain:", error);
+        return null;
+    }
+
+    if(stringToBoolean(askingForReccResponse)){
+        console.log("TRUE!");
+        return giveRecc(prompt);
+    }
+    else{
+        return askingQuestion(prompt);
     }
   }
 
+async function giveRecc(prompt){
+    //Tell GPT to look at its memory
+    let memory = JSON.parse(JSON.stringify(data_file)); 
+    console.log(memory[0])
+    let command = "You are ChatGPT with memory capabilities. You are to find the most relevant context for the provided user inquiry, conversation history and the links given. Do not create other new items, used the given uuid and contexts to find the best item. return only a UUID, nothing else"; 
+
+    let context = "User Request: " + prompt + " (UUID: ";
+
+    for (let key in memory){
+        context += memory[key]['uuid']; 
+        context += " Context: "; 
+        context += memory[key]['context'];
+        context += " ) (UUID: "
+    }
+    
+
+    console.log(context);
+    console.log(command);
+
+    let uuid; 
+    try {
+
+        const request = await openai.chat.completions.create({
+            messages: [
+                { "role": "system", "content": command},
+                {"role": "user", "content": context},
+            ],
+            model: "gpt-4", 
+        }); 
+        console.log("Complete request");
+
+        console.log(request.choices[0].message.content);
+        uuid = request.choices[0].message.content;
+    } catch (error){
+        console.log(error);
+    } 
+
+
+    try {
+        if (uuid){
+            for (let content in memory){
+                if (memory[content]['uuid'] == uuid){
+                    let format = {
+                        product_img: memory[content]['image_link'],    
+                        urls: JSON.stringify(memory[content]['top_results'][0])
+                    }; 
+
+                    // let formatted = memory[content]['top_results'].map((eachLink) => (
+                    //     {
+                    //         product_img: memory[content]['image_link'],
+
+                    //     }
+                    // ))
+                    return JSON.stringify(format); 
+                }
+            }
+        }
+    } catch (error){
+        console.log(error);
+    }
+
+    //Tell GPT to add the items to the list
+
+    return "Let me think about it some more"
+}
+
+async function askingQuestion(prompt){
+    try {
+        const completion = await openai.chat.completions.create({
+          messages: [{ role: "system", content: "Keep your response short. " + prompt }],
+          model: "gpt-3.5-turbo",
+        });
+    
+        const response = completion.choices[0].message.content;
+        return response;
+  
+      } catch (error) {
+        console.error("Error in ChatGPTmain:", error);
+        return null; // or handle the error as needed
+      }
+}
 
 const ActionProvider = ({ createChatBotMessage, setState, children}) => {
     async function handleMessage(userMessage) {
         // This function should generate a response from ChatGPT
-        const GPTresponse = await ChatGPTmain(userMessage);
-        const botResponse = createChatBotMessage(GPTresponse, {
+        let GPTresponse = await ChatGPTmain(userMessage);
+        const botResponse = createChatBotMessage("Here are the links I found for you: ", {
             widget: "productLink"
         })
+
+        let isParse = true;
+        try {
+            GPTresponse = JSON.parse(GPTresponse);
+        } catch (error) {
+            isParse = false;             
+        }
+
+        if (isParse == false) 
+            return; 
+
+        console.log(GPTresponse);
+        let url = GPTresponse["urls"];
 
         // Sample links generated by ChatGPT
         const linksGeneratedByChatGPT = [
             {
-                product_name: "Satin Short Pajamas Set",
-                product_img: "./sample-wishlist/pj-set.jpeg",
-                url: "https://www.victoriassecret.com/us/vs/sleepwear-and-lingerie-catalog/5000006214?genericId=11172758&choice=5W3S&size1=L&size1=L&cm_mmc=PLA-_-GOOGLE-_-VSD_VS_All_PMAX_LIA-_-&gad_source=1&gclid=Cj0KCQjw1qO0BhDwARIsANfnkv81SZyAzyhxYmKizI6tfrEHm5hIlZMJCk-XuVRe_3Mc6FCi9Nh8S48aAttqEALw_wcB&gclsrc=aw.ds",
+                product_name: "",
+                product_img: GPTresponse["product_img"],
+                url: JSON.parse(GPTresponse["urls"]),
             },
             {
                 product_name: "Van Cleef Bracelet",
@@ -46,7 +158,6 @@ const ActionProvider = ({ createChatBotMessage, setState, children}) => {
 
         // Appending each new link to wishlist link - may reconsider using sessionStorage for persistence
         linksGeneratedByChatGPT.forEach((newLink) => wishlist.push(newLink))
-
 
         // Setting values for new messages array and linksToDisplay inside state
         setState((prev) => ({
