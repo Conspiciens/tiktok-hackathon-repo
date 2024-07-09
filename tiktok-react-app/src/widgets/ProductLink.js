@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 function ProductLink(obj) {
   return (
-    <>
+    <div className="w-1/3">
       {obj.linksToDisplay.map((eachLink) => (
-        <Link to={eachLink.url} target="_blank">
-          <div className="bg-slate-100 w-1/3 h-18 hover:bg-slate-200 rounded-2xl space-x-5 m-3 p-2 ml-20">
+        <Link to={eachLink.url} target="_blank" key={eachLink.product_name}>
+          <div className="bg-slate-100 w-full h-18 hover:bg-slate-200 rounded-2xl space-x-5 m-3 p-2 ml-20">
             <img
               src={eachLink.product_img}
               className="w-20 h-20 xl:inline-block block m-auto object-cover rounded-2xl"
@@ -17,7 +17,7 @@ function ProductLink(obj) {
           </div>
         </Link>
       ))}
-    </>
+    </div>
   );
 }
 
